@@ -4,6 +4,7 @@ using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using MsalDemo.Api.Data;
 using MsalDemo.Api.Authorization;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -135,8 +136,59 @@ var app = builder.Build();
 // ──────────────────────────────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
+    // OpenAPI JSON endpoint (required for all UI tools)
     app.UseSwagger();
-    app.UseSwaggerUI();
+    
+    // ┌─────────────────────────────────────────────────────────────────────────┐
+    // │ Option 1: Swagger UI - Traditional interactive API documentation        │
+    // │ URL: /swagger                                                            │
+    // └─────────────────────────────────────────────────────────────────────────┘
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "MsalDemo API v1");
+        options.RoutePrefix = "swagger";
+        options.DocumentTitle = "MsalDemo API - Swagger";
+    });
+    
+    // ┌─────────────────────────────────────────────────────────────────────────┐
+    // │ Option 2: Scalar - Modern API documentation with dark mode & code gen  │
+    // │ URL: /scalar                                                             │
+    // │ Features: Dark mode, multiple language examples, search, authentication │
+    // └─────────────────────────────────────────────────────────────────────────┘
+    app.MapScalarApiReference(options =>
+    {
+        options
+            .WithTitle("MsalDemo API - Scalar")
+            .WithTheme(ScalarTheme.BluePlanet)
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+            .AddPreferredSecuritySchemes(new[] { "Bearer" })
+            .WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");
+    });
+    
+    // ┌─────────────────────────────────────────────────────────────────────────┐
+    // │ Option 3: ReDoc - Beautiful structured API documentation                │
+    // │ URL: /redoc                                                              │
+    // │ Features: Clean UI, three-panel layout, search, deep linking            │
+    // └─────────────────────────────────────────────────────────────────────────┘
+    app.UseReDoc(options =>
+    {
+        options.SpecUrl = "/swagger/v1/swagger.json";
+        options.RoutePrefix = "redoc";
+        options.DocumentTitle = "MsalDemo API - ReDoc";
+        
+        // ReDoc configuration options
+        options.EnableUntrustedSpec();
+        options.ScrollYOffset(10);
+        options.HideHostname();
+        options.HideDownloadButton();
+        options.ExpandResponses("200,201");
+        options.RequiredPropsFirst();
+        options.NoAutoAuth();
+        options.PathInMiddlePanel();
+        options.HideLoading();
+        options.NativeScrollbars();
+        options.SortPropsAlphabetically();
+    });
 }
 
 app.UseHttpsRedirection();
