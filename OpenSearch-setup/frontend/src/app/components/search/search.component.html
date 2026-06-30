@@ -1,0 +1,237 @@
+<div class="search-container">
+  <!-- Search Header -->
+  <div class="search-header">
+    <h1>🔍 OpenSearch Product Demo</h1>
+    <p class="subtitle">Search, filter, and explore products with full-text search</p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar-wrapper">
+    <div class="search-bar">
+      <input
+        type="text"
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        (blur)="hideSuggestions()"
+        (keyup.enter)="search()"
+        placeholder="Search products..."
+        class="search-input"
+      />
+      <button (click)="search()" class="search-button" [disabled]="isLoading()">
+        @if (isLoading()) {
+          <span class="spinner"></span>
+        } @else {
+          Search
+        }
+      </button>
+    </div>
+
+    <!-- Autocomplete Suggestions -->
+    @if (showSuggestions() && suggestions().length > 0) {
+      <div class="suggestions-dropdown">
+        @for (suggestion of suggestions(); track suggestion.text) {
+          <div 
+            class="suggestion-item" 
+            (click)="selectSuggestion(suggestion)"
+            [innerHTML]="suggestion.highlighted"
+          >
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Filters Sidebar -->
+    <aside class="filters-sidebar">
+      <div class="filters-header">
+        <h3>Filters</h3>
+        <button class="clear-filters" (click)="clearFilters()">Clear All</button>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <h4>Category</h4>
+        <ul class="filter-list">
+          <li>
+            <label>
+              <input 
+                type="radio" 
+                name="category" 
+                [checked]="!selectedCategory()"
+                (change)="onCategorySelect(undefined)"
+              />
+              All Categories
+            </label>
+          </li>
+          @for (facet of categoryFacets(); track facet.key) {
+            <li>
+              <label>
+                <input 
+                  type="radio" 
+                  name="category" 
+                  [checked]="selectedCategory() === facet.key"
+                  (change)="onCategorySelect(facet.key)"
+                />
+                {{ facet.key }} ({{ facet.count }})
+              </label>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Brand Filter -->
+      <div class="filter-group">
+        <h4>Brand</h4>
+        <ul class="filter-list">
+          <li>
+            <label>
+              <input 
+                type="radio" 
+                name="brand" 
+                [checked]="!selectedBrand()"
+                (change)="onBrandSelect(undefined)"
+              />
+              All Brands
+            </label>
+          </li>
+          @for (facet of brandFacets(); track facet.key) {
+            <li>
+              <label>
+                <input 
+                  type="radio" 
+                  name="brand" 
+                  [checked]="selectedBrand() === facet.key"
+                  (change)="onBrandSelect(facet.key)"
+                />
+                {{ facet.key }} ({{ facet.count }})
+              </label>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Price Range Filter -->
+      <div class="filter-group">
+        <h4>Price Range</h4>
+        <div class="price-inputs">
+          <input
+            type="number"
+            placeholder="Min"
+            [value]="minPrice()"
+            (change)="minPrice.set($any($event.target).value ? +$any($event.target).value : undefined); onPriceRangeChange()"
+            class="price-input"
+          />
+          <span>-</span>
+          <input
+            type="number"
+            placeholder="Max"
+            [value]="maxPrice()"
+            (change)="maxPrice.set($any($event.target).value ? +$any($event.target).value : undefined); onPriceRangeChange()"
+            class="price-input"
+          />
+        </div>
+      </div>
+
+      <!-- In Stock Filter -->
+      <div class="filter-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="inStockOnly()"
+            (change)="inStockOnly.set(!inStockOnly()); onStockFilterChange()"
+          />
+          In Stock Only
+        </label>
+      </div>
+    </aside>
+
+    <!-- Main Results Area -->
+    <main class="results-area">
+      <!-- Results Header -->
+      <div class="results-header">
+        <div class="results-info">
+          @if (searchResults()) {
+            <span>
+              Found <strong>{{ totalResults() }}</strong> products
+              @if (searchTook()) {
+                in {{ searchTook() }}ms
+              }
+            </span>
+          }
+        </div>
+        <div class="sort-controls">
+          <label for="sort">Sort by:</label>
+          <select id="sort" (change)="onSortChange($event)">
+            <option value="_score:desc" [selected]="sortBy() === '_score'">Relevance</option>
+            <option value="price:asc" [selected]="sortBy() === 'price' && sortOrder() === 'asc'">Price: Low to High</option>
+            <option value="price:desc" [selected]="sortBy() === 'price' && sortOrder() === 'desc'">Price: High to Low</option>
+            <option value="name:asc" [selected]="sortBy() === 'name' && sortOrder() === 'asc'">Name: A-Z</option>
+            <option value="name:desc" [selected]="sortBy() === 'name' && sortOrder() === 'desc'">Name: Z-A</option>
+            <option value="createdAt:desc" [selected]="sortBy() === 'createdAt'">Newest First</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      @if (error()) {
+        <div class="error-message">
+          <p>{{ error() }}</p>
+          <button (click)="search()">Try Again</button>
+        </div>
+      }
+
+      <!-- Loading State -->
+      @if (isLoading()) {
+        <div class="loading-state">
+          <div class="spinner large"></div>
+          <p>Searching...</p>
+        </div>
+      }
+
+      <!-- Results -->
+      @if (!isLoading() && searchResults()) {
+        <app-product-list [hits]="searchResults().hits"></app-product-list>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            <button 
+              class="page-btn" 
+              [disabled]="currentPage() === 1"
+              (click)="onPageChange(currentPage() - 1)"
+            >
+              ← Prev
+            </button>
+            
+            @for (page of getPageNumbers(); track page) {
+              <button 
+                class="page-btn" 
+                [class.active]="page === currentPage()"
+                (click)="onPageChange(page)"
+              >
+                {{ page }}
+              </button>
+            }
+            
+            <button 
+              class="page-btn" 
+              [disabled]="currentPage() === totalPages()"
+              (click)="onPageChange(currentPage() + 1)"
+            >
+              Next →
+            </button>
+          </div>
+        }
+      }
+
+      <!-- Empty State -->
+      @if (!isLoading() && searchResults()?.hits?.length === 0) {
+        <div class="empty-state">
+          <p>No products found matching your criteria.</p>
+          <button (click)="clearFilters()">Clear Filters</button>
+        </div>
+      }
+    </main>
+  </div>
+</div>

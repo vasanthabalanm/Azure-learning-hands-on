@@ -1,0 +1,67 @@
+<div class="product-grid">
+  @for (hit of hits; track hit.id) {
+    <div class="product-card">
+      <!-- Product Header -->
+      <div class="product-header">
+        <span class="category-badge">{{ hit.source.category }}</span>
+        @if (hit.score && hit.score > 0) {
+          <span class="score-badge" title="Relevance Score">
+            {{ hit.score.toFixed(2) }}
+          </span>
+        }
+      </div>
+
+      <!-- Product Content -->
+      <div class="product-content">
+        <h3 class="product-name" [innerHTML]="getHighlight(hit, 'name')"></h3>
+        <p class="product-brand">by {{ hit.source.brand }}</p>
+        <p class="product-description" [innerHTML]="getHighlight(hit, 'description')"></p>
+
+        <!-- Tags -->
+        @if (hit.source.tags && hit.source.tags.length > 0) {
+          <div class="product-tags">
+            @for (tag of hit.source.tags.slice(0, 3); track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+            @if (hit.source.tags.length > 3) {
+              <span class="tag more">+{{ hit.source.tags.length - 3 }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Product Footer -->
+      <div class="product-footer">
+        <div class="price-info">
+          <span class="price">{{ formatPrice(hit.source.price) }}</span>
+        </div>
+        <div class="stock-info">
+          <span 
+            class="stock-badge" 
+            [class]="getStockStatus(hit.source.stock).class"
+          >
+            {{ getStockStatus(hit.source.stock).text }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Specifications Preview -->
+      @if (hit.source.specifications) {
+        <div class="specs-preview">
+          @for (spec of (hit.source.specifications | keyvalue).slice(0, 2); track spec.key) {
+            <div class="spec-item">
+              <span class="spec-key">{{ spec.key }}:</span>
+              <span class="spec-value">{{ spec.value }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (hits.length === 0) {
+  <div class="no-results">
+    <p>No products to display.</p>
+  </div>
+}

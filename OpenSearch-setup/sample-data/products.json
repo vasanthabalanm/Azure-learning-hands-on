@@ -1,0 +1,287 @@
+[
+  {
+    "id": "PROD001",
+    "name": "Wireless Bluetooth Headphones",
+    "description": "Premium noise-canceling wireless headphones with 30-hour battery life and comfortable ear cushions. Features active noise cancellation and crystal-clear audio quality.",
+    "category": "Electronics",
+    "subcategory": "Audio",
+    "price": 149.99,
+    "brand": "TechAudio",
+    "tags": ["wireless", "bluetooth", "noise-canceling", "premium"],
+    "rating": 4.5,
+    "stock": 250,
+    "isActive": true,
+    "createdAt": "2024-01-15T10:30:00Z",
+    "specifications": {
+      "weight": 0.25,
+      "dimensions": "18x15x8cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD002",
+    "name": "Ergonomic Office Chair",
+    "description": "Adjustable lumbar support ergonomic chair perfect for home office with breathable mesh back. Supports up to 300 lbs with 5-year warranty.",
+    "category": "Furniture",
+    "subcategory": "Chairs",
+    "price": 299.99,
+    "brand": "ComfortPlus",
+    "tags": ["ergonomic", "office", "adjustable", "mesh"],
+    "rating": 4.2,
+    "stock": 50,
+    "isActive": true,
+    "createdAt": "2024-01-20T14:00:00Z",
+    "specifications": {
+      "weight": 15.5,
+      "dimensions": "60x60x120cm",
+      "color": "Gray"
+    }
+  },
+  {
+    "id": "PROD003",
+    "name": "Mechanical Gaming Keyboard",
+    "description": "RGB mechanical gaming keyboard with Cherry MX switches and programmable macros. Full N-key rollover and dedicated media controls.",
+    "category": "Electronics",
+    "subcategory": "Peripherals",
+    "price": 129.99,
+    "brand": "GameTech",
+    "tags": ["mechanical", "rgb", "gaming", "cherry-mx"],
+    "rating": 4.7,
+    "stock": 100,
+    "isActive": true,
+    "createdAt": "2024-02-01T09:00:00Z",
+    "specifications": {
+      "weight": 1.2,
+      "dimensions": "44x14x4cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD004",
+    "name": "Electric Standing Desk",
+    "description": "Electric height adjustable standing desk 60x30 inches with memory presets. Quiet dual-motor system with anti-collision technology.",
+    "category": "Furniture",
+    "subcategory": "Desks",
+    "price": 449.99,
+    "brand": "ErgoDesk",
+    "tags": ["standing", "electric", "adjustable", "motorized"],
+    "rating": 4.4,
+    "stock": 25,
+    "isActive": true,
+    "createdAt": "2024-02-05T11:30:00Z",
+    "specifications": {
+      "weight": 35.0,
+      "dimensions": "152x76x72-122cm",
+      "color": "Walnut"
+    }
+  },
+  {
+    "id": "PROD005",
+    "name": "Aluminum Laptop Stand",
+    "description": "Aluminum adjustable laptop stand for MacBook and laptops up to 17 inches. Improves ergonomics and increases airflow for better cooling.",
+    "category": "Electronics",
+    "subcategory": "Accessories",
+    "price": 49.99,
+    "brand": "TechGear",
+    "tags": ["aluminum", "adjustable", "portable", "cooling"],
+    "rating": 4.3,
+    "stock": 200,
+    "isActive": true,
+    "createdAt": "2024-02-10T08:00:00Z",
+    "specifications": {
+      "weight": 0.8,
+      "dimensions": "25x22x5cm",
+      "color": "Silver"
+    }
+  },
+  {
+    "id": "PROD006",
+    "name": "True Wireless Earbuds Pro",
+    "description": "True wireless earbuds with active noise cancellation and wireless charging case. IPX4 water resistance with 28-hour total battery life.",
+    "category": "Electronics",
+    "subcategory": "Audio",
+    "price": 199.99,
+    "brand": "TechAudio",
+    "tags": ["wireless", "noise-canceling", "earbuds", "water-resistant"],
+    "rating": 4.6,
+    "stock": 150,
+    "isActive": true,
+    "createdAt": "2024-02-15T13:00:00Z",
+    "specifications": {
+      "weight": 0.06,
+      "dimensions": "6x5x3cm",
+      "color": "White"
+    }
+  },
+  {
+    "id": "PROD007",
+    "name": "4K Streaming Webcam",
+    "description": "Ultra HD 4K webcam with auto-focus and dual noise-reducing microphones for streaming and video conferencing. Works with all major platforms.",
+    "category": "Electronics",
+    "subcategory": "Peripherals",
+    "price": 179.99,
+    "brand": "StreamPro",
+    "tags": ["4k", "webcam", "streaming", "auto-focus"],
+    "rating": 4.4,
+    "stock": 75,
+    "isActive": true,
+    "createdAt": "2024-02-20T10:00:00Z",
+    "specifications": {
+      "weight": 0.15,
+      "dimensions": "8x3x3cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD008",
+    "name": "Dual Monitor Arm",
+    "description": "Heavy-duty dual monitor arm with full motion articulation and integrated cable management. Supports monitors 13-32 inches up to 20 lbs each.",
+    "category": "Furniture",
+    "subcategory": "Accessories",
+    "price": 89.99,
+    "brand": "ErgoDesk",
+    "tags": ["monitor", "dual", "adjustable", "cable-management"],
+    "rating": 4.5,
+    "stock": 120,
+    "isActive": true,
+    "createdAt": "2024-02-25T15:00:00Z",
+    "specifications": {
+      "weight": 4.5,
+      "dimensions": "Clamp: 10cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD009",
+    "name": "Ergonomic Wireless Mouse",
+    "description": "Ergonomic wireless mouse with silent clicks and 18-month battery life. Vertical design reduces wrist strain during extended use.",
+    "category": "Electronics",
+    "subcategory": "Peripherals",
+    "price": 39.99,
+    "brand": "TechGear",
+    "tags": ["wireless", "ergonomic", "silent", "vertical"],
+    "rating": 4.1,
+    "stock": 300,
+    "isActive": true,
+    "createdAt": "2024-03-01T09:30:00Z",
+    "specifications": {
+      "weight": 0.12,
+      "dimensions": "12x7x8cm",
+      "color": "Gray"
+    }
+  },
+  {
+    "id": "PROD010",
+    "name": "12-in-1 USB-C Hub",
+    "description": "12-in-1 USB-C hub with HDMI 4K output, SD card reader, Gigabit Ethernet, and 100W PD charging. Compatible with all USB-C laptops.",
+    "category": "Electronics",
+    "subcategory": "Accessories",
+    "price": 79.99,
+    "brand": "TechGear",
+    "tags": ["usb-c", "hub", "portable", "hdmi", "ethernet"],
+    "rating": 4.3,
+    "stock": 180,
+    "isActive": true,
+    "createdAt": "2024-03-05T14:00:00Z",
+    "specifications": {
+      "weight": 0.15,
+      "dimensions": "12x5x2cm",
+      "color": "Space Gray"
+    }
+  },
+  {
+    "id": "PROD011",
+    "name": "Portable Bluetooth Speaker",
+    "description": "Waterproof portable Bluetooth speaker with 360-degree sound and 24-hour battery life. IPX7 rated for pool and beach use.",
+    "category": "Electronics",
+    "subcategory": "Audio",
+    "price": 79.99,
+    "brand": "TechAudio",
+    "tags": ["bluetooth", "portable", "waterproof", "speaker"],
+    "rating": 4.4,
+    "stock": 200,
+    "isActive": true,
+    "createdAt": "2024-03-10T11:00:00Z",
+    "specifications": {
+      "weight": 0.5,
+      "dimensions": "18x8x8cm",
+      "color": "Blue"
+    }
+  },
+  {
+    "id": "PROD012",
+    "name": "Gaming Mouse Pad XL",
+    "description": "Extended gaming mouse pad with smooth cloth surface and non-slip rubber base. Perfect for low DPI gaming with ample space.",
+    "category": "Electronics",
+    "subcategory": "Accessories",
+    "price": 24.99,
+    "brand": "GameTech",
+    "tags": ["gaming", "mousepad", "extended", "cloth"],
+    "rating": 4.2,
+    "stock": 400,
+    "isActive": true,
+    "createdAt": "2024-03-15T08:00:00Z",
+    "specifications": {
+      "weight": 0.4,
+      "dimensions": "90x40x0.3cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD013",
+    "name": "Mesh Office Chair Basic",
+    "description": "Budget-friendly mesh office chair with adjustable height and armrests. Breathable mesh back keeps you cool during long work sessions.",
+    "category": "Furniture",
+    "subcategory": "Chairs",
+    "price": 149.99,
+    "brand": "ComfortPlus",
+    "tags": ["mesh", "office", "budget", "adjustable"],
+    "rating": 3.9,
+    "stock": 80,
+    "isActive": true,
+    "createdAt": "2024-03-20T16:00:00Z",
+    "specifications": {
+      "weight": 12.0,
+      "dimensions": "55x55x95cm",
+      "color": "Black"
+    }
+  },
+  {
+    "id": "PROD014",
+    "name": "Wireless Charging Pad",
+    "description": "Fast wireless charging pad compatible with all Qi-enabled devices. Supports up to 15W fast charging with LED indicator.",
+    "category": "Electronics",
+    "subcategory": "Accessories",
+    "price": 29.99,
+    "brand": "TechGear",
+    "tags": ["wireless", "charging", "qi", "fast-charging"],
+    "rating": 4.0,
+    "stock": 350,
+    "isActive": true,
+    "createdAt": "2024-03-25T12:00:00Z",
+    "specifications": {
+      "weight": 0.1,
+      "dimensions": "10x10x1cm",
+      "color": "White"
+    }
+  },
+  {
+    "id": "PROD015",
+    "name": "Studio Condenser Microphone",
+    "description": "Professional USB condenser microphone for podcasting and streaming. Cardioid pickup pattern with built-in pop filter.",
+    "category": "Electronics",
+    "subcategory": "Audio",
+    "price": 129.99,
+    "brand": "StreamPro",
+    "tags": ["microphone", "usb", "condenser", "podcast"],
+    "rating": 4.6,
+    "stock": 60,
+    "isActive": true,
+    "createdAt": "2024-04-01T10:00:00Z",
+    "specifications": {
+      "weight": 0.35,
+      "dimensions": "5x5x18cm",
+      "color": "Silver"
+    }
+  }
+]
