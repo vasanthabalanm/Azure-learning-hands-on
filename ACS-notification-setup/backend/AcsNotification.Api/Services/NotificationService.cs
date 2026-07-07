@@ -34,6 +34,18 @@ public class NotificationService : INotificationService
         Guid entityId,
         CancellationToken cancellationToken = default)
     {
+        return await SendNotificationsAsync(patient, enabledChannels, messageTemplate, entityType, entityId, null, cancellationToken);
+    }
+
+    public async Task<int> SendNotificationsAsync(
+        Patient patient,
+        string[] enabledChannels,
+        string messageTemplate,
+        string entityType,
+        Guid entityId,
+        object? context,
+        CancellationToken cancellationToken = default)
+    {
         var successCount = 0;
 
         _logger.LogInformation(
@@ -65,8 +77,18 @@ public class NotificationService : INotificationService
                 continue;
             }
 
-            // Execute the strategy
-            var success = await strategy.SendAsync(recipient, messageTemplate, cancellationToken);
+            // Execute the strategy with context if available
+            bool success;
+            if (context != null && strategy is EmailNotificationStrategy emailStrategy)
+            {
+                // Use the overload that accepts context for email
+                success = await emailStrategy.SendAsync(recipient, messageTemplate, context, cancellationToken);
+            }
+            else
+            {
+                // Use the standard method for other channels
+                success = await strategy.SendAsync(recipient, messageTemplate, cancellationToken);
+            }
 
             // Determine error message
             string? errorMessage = null;

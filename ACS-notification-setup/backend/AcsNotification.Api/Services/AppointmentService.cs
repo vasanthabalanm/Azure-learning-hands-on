@@ -60,6 +60,7 @@ public class AppointmentService : IAppointmentService
             message,
             "Appointment",
             appointment.Id,
+            appointment,  // Pass appointment as context for email template
             cancellationToken);
 
         // Update status if notifications were sent

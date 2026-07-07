@@ -14,4 +14,14 @@ public interface INotificationService
         string entityType,
         Guid entityId,
         CancellationToken cancellationToken = default);
+
+    // Sends notifications with additional context (e.g., Appointment object for email template)
+    Task<int> SendNotificationsAsync(
+        Patient patient,
+        string[] enabledChannels,
+        string messageTemplate,
+        string entityType,
+        Guid entityId,
+        object? context,
+        CancellationToken cancellationToken = default);
 }
