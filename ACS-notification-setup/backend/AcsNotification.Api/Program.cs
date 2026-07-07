@@ -46,23 +46,36 @@ if (string.IsNullOrEmpty(dbConnectionString))
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(dbConnectionString));
 
-// Repository Registration
+// Dependency Injection with Scrutor (Assembly Scanning)
+// Scrutor automatically registers all implementations, making it easy to add new strategies/services/repositories
+// without modifying this file - follows Open/Closed Principle!
+
+// Generic Repository Registration
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IPatientRepository, PatientRepository>();
-builder.Services.AddScoped<IFollowUpRepository, FollowUpRepository>();
-builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
-// Strategy Pattern Registration
-// All strategies registered with the same interface allows NotificationService to inject IEnumerable<INotificationStrategy>
-builder.Services.AddScoped<INotificationStrategy, EmailNotificationStrategy>();
-builder.Services.AddScoped<INotificationStrategy, SmsNotificationStrategy>();
-builder.Services.AddScoped<INotificationStrategy, WhatsAppNotificationStrategy>();
-builder.Services.AddScoped<INotificationStrategy, PushNotificationStrategy>();
+// Auto-register all Repositories (Specific repositories like PatientRepository, FollowUpRepository, etc.)
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.InNamespaces("AcsNotification.Api.Repositories")
+        .Where(type => !type.IsGenericType && type.Name.EndsWith("Repository")))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
-// Service Layer Registration
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<IFollowUpService, FollowUpService>();
-builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+// Auto-register all Notification Strategies (EmailNotificationStrategy, SmsNotificationStrategy, etc.)
+// All strategies registered with INotificationStrategy allows NotificationService to inject IEnumerable<INotificationStrategy>
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.AssignableTo<INotificationStrategy>())
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
+
+// Auto-register all Services (NotificationService, FollowUpService, AppointmentService)
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>()
+    .AddClasses(classes => classes.InNamespaces("AcsNotification.Api.Services")
+        .Where(type => type.Name.EndsWith("Service") && !type.IsInterface))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
 // Add services to the container
 builder.Services.AddControllers();
